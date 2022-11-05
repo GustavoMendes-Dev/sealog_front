@@ -33,6 +33,7 @@ const Alert: React.FC<IAlert> = ({ type, title, icon, message, close }) => {
         <span onClick={() => setAlertMessage(null)} className="svg-icon svg-icon-2x svg-icon-light">
           x
         </span>
+        
       </div>
     </div>
   );
