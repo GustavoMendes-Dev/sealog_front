@@ -24,7 +24,7 @@ export const menu = [
   },
   {
     title: "Viagens",
-    url: "/",
+    url: "/travels",
     icon: <IconDashBoard />,
   },
   {
