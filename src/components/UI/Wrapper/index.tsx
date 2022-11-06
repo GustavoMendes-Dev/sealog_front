@@ -1,7 +1,7 @@
 import React, { memo, useContext } from "react";
-import { AppContext } from "../../providers/appProvider";
+import { AppContext } from "../../../providers/appProvider";
 import Alert from "../Alert";
-import Header from "../Header";
+import Header from "../../Header";
 import Sidebar from "../Sidebar";
 
 import "./style.scss";

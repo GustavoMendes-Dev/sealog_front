@@ -2,23 +2,28 @@ import { IconDashBoard } from "../Icons";
 
 export const menu = [
   {
-    title: "Gestão Técnica",
-  },
-  {
-    title: "Gerenciamento de Estoque",
+    title: "Painel",
     url: "/",
     icon: <IconDashBoard/>,
   },
-  {
-    title: "Doca Seca",
-    url: "/",
-    icon: <IconDashBoard />,
-  },
-  {
-    title: "Peças de reposição",
-    url: "/",
-    icon: <IconDashBoard />,
-  },
+  // {
+  //   title: "Gestão Técnica",
+  // },
+  // {
+  //   title: "Gerenciamento de Estoque",
+  //   url: "/",
+  //   icon: <IconDashBoard/>,
+  // },
+  // {
+  //   title: "Doca Seca",
+  //   url: "/",
+  //   icon: <IconDashBoard />,
+  // },
+  // {
+  //   title: "Peças de reposição",
+  //   url: "/",
+  //   icon: <IconDashBoard />,
+  // },
   {
     title: "Operação",
   },
@@ -29,25 +34,25 @@ export const menu = [
   },
   {
     title: "Consumo e Resíduos",
-    url: "/",
+    url: "/vessel",
     icon: <IconDashBoard />,
   },
-  {
-    title: "Custos de Operação",
-    url: "/",
-    icon: <IconDashBoard />,
-  },
-  {
-    title: "Recursos Humanos",
-  },
-  {
-    title: "Gerente de Tripulação",
-    url: "/",
-    icon: <IconDashBoard />,
-  },
-  {
-    title: "Horas de trabalho e descanso",
-    url: "/",
-    icon: <IconDashBoard />,
-  },
+  // {
+  //   title: "Custos de Operação",
+  //   url: "/",
+  //   icon: <IconDashBoard />,
+  // },
+  // {
+  //   title: "Recursos Humanos",
+  // },
+  // {
+  //   title: "Gerente de Tripulação",
+  //   url: "/",
+  //   icon: <IconDashBoard />,
+  // },
+  // {
+  //   title: "Horas de trabalho e descanso",
+  //   url: "/",
+  //   icon: <IconDashBoard />,
+  // },
 ];

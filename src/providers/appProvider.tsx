@@ -1,6 +1,8 @@
-import React, { useState, createContext } from "react";
+import React, { useState, createContext, useEffect } from "react";
+import { useQuery } from "react-query";
 import { useHistory } from "react-router-dom";
-import { IAlert } from "../components/Alert";
+import { IAlert } from "../components/UI/Alert";
+import { getVesselsAll } from "../services/basic-rest/vessels";
 
 export type IUser = {
   name: string;
@@ -12,6 +14,7 @@ export interface PropsAppTypes {
   handleLogoutUser: () => void;
   alertMessage: IAlert | null;
   setAlertMessage: (alertMessage: IAlert | null) => void;
+  vessels: any[];
 }
 
 export const AppContext = createContext({} as PropsAppTypes);
@@ -20,11 +23,27 @@ export function AppProvider({ children }: any) {
   const history = useHistory();
   const [user, setUser] = useState<IUser | null>(null);
   const [ alertMessage, setAlertMessage ] = useState<IAlert | null>(null);
+  const [ vessels, setVessels ] = useState<any>(null);
 
   const handleLogoutUser = () => {
     localStorage.removeItem("access_token");
     history.push("/entrar");
   };
+
+  const {
+    data: dataVessels, 
+    isLoading,
+    error,
+  } = useQuery("vesselsList", getVesselsAll, {
+    // cacheTime: 10,
+    refetchOnWindowFocus: false,
+  });
+
+  console.log(dataVessels)
+
+  useEffect(() => {
+    setVessels(dataVessels as any[]);
+  }, [dataVessels, setVessels]);
 
   return (
     <AppContext.Provider
@@ -34,6 +53,7 @@ export function AppProvider({ children }: any) {
         handleLogoutUser,
         alertMessage,
         setAlertMessage,
+        vessels,
       }}
     >
       {children}

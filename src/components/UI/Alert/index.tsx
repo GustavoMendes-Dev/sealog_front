@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { AppContext } from "../../providers/appProvider";
+import { AppContext } from "../../../providers/appProvider";
 
 import "./style.scss";
 

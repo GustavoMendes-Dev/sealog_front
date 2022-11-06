@@ -1,11 +1,29 @@
-import React, { memo } from "react";
-import { Link } from "react-router-dom";
+import React, { memo, useContext, useEffect, useRef, useState } from "react";
+import { Form } from "@unform/web";
+import Select from "../UI/Select ";
+import { AppContext } from "../../providers/appProvider";
+import { FormHandles } from "@unform/core";
 
 export type IHeader = {
   title: string;
 };
 
 const Header: React.FC<IHeader> = ({ title }) => {
+  const formRef = useRef<FormHandles | null>(null);
+  const { vessels } = useContext(AppContext);
+  const [listVessel, setListVessel] = useState<any | null>();
+
+  useEffect(() => {
+    const options = vessels?.map((item) => {
+      return {
+        value: item.id,
+        label: item.name,
+      };
+    });
+    setListVessel(options);
+  }, [vessels]);
+
+
   return (
     <div className="header align-items-stretch">
       <div className="container-fluid d-flex align-items-stretch justify-content-between">
@@ -50,18 +68,25 @@ const Header: React.FC<IHeader> = ({ title }) => {
                 {title}
               </h1>
               <span className="h-20px border-gray-300 border-start mx-4"></span>
-              <Link
+              {/* <Link
                 to={{
                   pathname: `teste`,
                 }}
                 target="_blank"
                 className="breadcrumb-item text-dark"
               >
-                Teste
-              </Link>
+                Embarcação Horizonte 2
+              </Link> */}
+              <Form
+                onSubmit={() => {
+                  console.log(`dasdas`);
+                }}
+                ref={formRef}
+              >
+                <Select name="vessel" options={listVessel} />
+              </Form>
             </div>
           </div>
-          Teste
         </div>
       </div>
     </div>

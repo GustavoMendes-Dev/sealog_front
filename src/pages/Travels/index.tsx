@@ -1,18 +1,17 @@
 import React, { useContext } from "react";
-import Card from "../../components/Card";
-import Tables from "../../components/Tables";
-import Wrapper from "../../components/Wrapper";
-import { columnsTravelsTable } from "../../constants/columns";
+import Travel from "../../components/Travel";
+import Wrapper from "../../components/UI/Wrapper";
 import { TravelsContext } from "../../providers/travelsProvider";
+import { ITravelsDto } from "../../types/travels";
 
 const Travels: React.FC = () => {
   const { travelsList } = useContext(TravelsContext);
   return (
     <>
       <Wrapper title="Viagens">
-        <Card>
-          <Tables data={travelsList} columns={columnsTravelsTable} />
-        </Card>
+        {travelsList.sort((a, b) => (a.date < b.date) ? -1 : 1).map((travel: ITravelsDto) => {
+          return <Travel title={travel.name + ' - ' + travel.date} data={travel.paths} />;
+        })}
       </Wrapper>
     </>
   );

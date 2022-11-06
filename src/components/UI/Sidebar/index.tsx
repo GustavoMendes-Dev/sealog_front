@@ -1,7 +1,7 @@
 import React, { memo, useCallback, useEffect, useState } from "react";
-import Brand from "../../assets/Brand";
-import { IconToggleSidebar } from "../../Icons";
-import MegaMenu from "../MegaMenu";
+import Brand from "../../../assets/Brand";
+import { IconToggleSidebar } from "../../../Icons";
+import MegaMenu from "../../MegaMenu";
 
 import "./style.scss";
 

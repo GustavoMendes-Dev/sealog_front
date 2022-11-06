@@ -1,23 +1,57 @@
 import { TableColumn } from "react-data-table-component";
-import { ITravelsDto } from "../types/travels";
+import CheckTable from "../components/CheckTable";
+import { IPathsDto } from "../types/travels";
 
-export const columnsTravelsTable: TableColumn<ITravelsDto>[] = [
+export const columnsTravelsTable: TableColumn<IPathsDto>[] = [
   {
     name: "Nome",
     selector: (row) => row.name,
     sortable: true,
   },
   {
-    name: "Documento",
-    selector: (row) => row.document,
+    name: "Origem",
+    selector: (row) => row.origin,
   },
   {
-    name: "Telefone",
-    selector: (row) => row.phone,
+    name: "Destino",
+    selector: (row) => row.destination,
   },
   {
-    name: "Ações",
-    selector: (row) => row.actions,
-    width: "100px",
+    name: "Partida",
+    selector: (row) => row.departure,
+  },
+  {
+    name: "Chegada",
+    selector: (row) => row.arrival,
+    sortable: true,
+  },
+  {
+    name: "Distância",
+    selector: (row) => row.distance,
+    sortable: true,
+  },
+  {
+    name: "Custo",
+    selector: (row) => row.cost,
+  },
+  {
+    button: true,
+    cell: (row) => <input onClick={() =>  console.log(row)} name="id" type="radio"></input>
+  },
+];
+
+export const columnsVesselTable: TableColumn<any>[] = [
+  {
+    name: "Nome",
+    selector: (row) => row.title,
+    sortable: true,
+  },
+  {
+    name: "Origem",
+    selector: (row) => row.name,
+  },
+  {
+    name: "Destino",
+    selector: (row) => row.value,
   },
 ];
