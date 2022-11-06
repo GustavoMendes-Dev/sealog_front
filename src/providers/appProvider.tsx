@@ -39,8 +39,6 @@ export function AppProvider({ children }: any) {
     refetchOnWindowFocus: false,
   });
 
-  console.log(dataVessels)
-
   useEffect(() => {
     setVessels(dataVessels as any[]);
   }, [dataVessels, setVessels]);

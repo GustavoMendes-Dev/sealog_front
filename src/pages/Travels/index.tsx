@@ -1,17 +1,38 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
+import { useQuery } from "react-query";
 import Travel from "../../components/Travel";
 import Wrapper from "../../components/UI/Wrapper";
 import { TravelsContext } from "../../providers/travelsProvider";
+import { getTravelAll } from "../../services/basic-rest/travels";
 import { ITravelsDto } from "../../types/travels";
 
 const Travels: React.FC = () => {
-  const { travelsList } = useContext(TravelsContext);
+  const { setTravelsList, travelsList } = useContext(TravelsContext);
+
+  const {
+    data: dataTravels, 
+    isLoading,
+    error,
+  } = useQuery(`travelList_${'1'}`, () => getTravelAll('1'), {
+    // cacheTime: 10,
+    refetchOnWindowFocus: false,
+  });
+  
+  console.log(travelsList)
+
+  useEffect(() => {
+    setTravelsList(dataTravels as ITravelsDto[]);
+  }, [dataTravels]);
+
   return (
     <>
       <Wrapper title="Viagens">
-        {travelsList.sort((a, b) => (a.date < b.date) ? -1 : 1).map((travel: ITravelsDto) => {
-          return <Travel title={travel.name + ' - ' + travel.date} data={travel.paths} />;
-        })}
+        {!isLoading ? 
+        travelsList?.sort((a, b) => (a.createdAt < b.createdAt) ? -1 : 1).map((travel: ITravelsDto) => {
+          return <Travel title={String(travel.createdAt)} id={travel.id} data={travel.routes} />;
+        }) : 
+        "Carregando..."
+      }
       </Wrapper>
     </>
   );

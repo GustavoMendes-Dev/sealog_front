@@ -1,19 +1,19 @@
 export interface ITravelsDto {
   id?: number;
-  name: string;
-  date: Date;
-  phone: string;
+  createdAt: Date;
+  updatedAt: Date;
+  ship: any;
   actions?: any;
-  paths: any;
+  routes: IRoutesDto[];
 }
-export interface IPathsDto {
+export interface IRoutesDto {
   id: number;
   name: string;
-  origin: string;
-  destination: string;
+  originAddress: string;
+  originDatetime: string;
+  destinationAddress: string;
+  destinationDatetime: string;
   distance: string;
-  departure: string;
-  cost: string;
-  arrival: string;
   actions: any;
+  tag: string;
 }

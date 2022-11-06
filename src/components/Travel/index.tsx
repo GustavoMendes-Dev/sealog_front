@@ -5,16 +5,17 @@ import Card from '../Card';
 import Tables from '../UI/Tables';
 
 export interface ITravel {
+  id?: number;
   title:string;
   data: any;
 }
 
-const Travel: React.FC<ITravel> = ({data, title}) => {
+const Travel: React.FC<ITravel> = ({data, title, id}) => {
 
   const button: IButtons = {
     title: "Visualizar",
     type: "link",
-    action: "/travels/12",
+    action: `/travels/${id}`,
   };
 
   return <>

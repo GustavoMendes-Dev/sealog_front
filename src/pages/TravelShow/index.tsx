@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Card from "../../components/Card";
 import Tables from "../../components/UI/Tables";
 import Wrapper from "../../components/UI/Wrapper";
 
 import { TableColumn } from "react-data-table-component";
-import { IPathsDto } from "../../types/travels";
+import { IRoutesDto, ITravelsDto } from "../../types/travels";
+import { useQuery } from "react-query";
+import { getTravelById } from "../../services/basic-rest/travels";
+import Tag from "../../components/UI/Tag";
 
 interface ParamTypes {
   id: string;
@@ -13,63 +16,39 @@ interface ParamTypes {
 
 const TravelShow: React.FC = () => {
   const { id } = useParams<ParamTypes>();
-  const [ total, setTotal ] = useState<IPathsDto>();
+  const [total, setTotal] = useState<IRoutesDto>();
+  const [travel, setTravel] = useState<ITravelsDto>();
 
-  const handleTotal = (row: IPathsDto) => {
+  const handleTotal = (row: IRoutesDto) => {
     setTotal(row);
-  }
+  };
 
-  const data = [
-    {
-      id: 1,
-      name: "Rota 1",
-      origin: "P-12",
-      destination: "P-10",
-      departure: "20/10/2022 - 12:10",
-      arrival: "20/10/2022 - 12:10",
-      cost: 120.0,
-    },
-    {
-      id: 2,
-      name: "Rota 2",
-      origin: "P-12",
-      destination: "P-10",
-      departure: "20/10/2022 - 12:10",
-      arrival: "20/10/2022 - 12:10",
-      cost: 120.0,
-    },
-    {
-      id: 3,
-      name: "Rota 3",
-      origin: "P-12",
-      destination: "P-10",
-      departure: "20/10/2022 - 12:10",
-      arrival: "20/10/2022 - 12:10",
-      cost: 120.0,
-    },
-  ];
+  const {
+    data: dataTravel,
+    isLoading,
+    error,
+  } = useQuery(`travelList_${id}`, () => getTravelById(id), {
+    // cacheTime: 10,
+    refetchOnWindowFocus: false,
+  });
 
-  const columnsTravelsTable: TableColumn<IPathsDto>[] = [
+  useEffect(() => {
+    setTravel(dataTravel as ITravelsDto);
+  }, [dataTravel]);
+
+  const columnsTravelsTable: TableColumn<IRoutesDto>[] = [
     {
       name: "Nome",
       selector: (row) => row.name,
       sortable: true,
     },
     {
-      name: "Origem",
-      selector: (row) => row.origin,
-    },
-    {
-      name: "Destino",
-      selector: (row) => row.destination,
-    },
-    {
       name: "Partida",
-      selector: (row) => row.departure,
+      selector: (row) => row.originDatetime,
     },
     {
       name: "Chegada",
-      selector: (row) => row.arrival,
+      selector: (row) => row.destinationDatetime,
       sortable: true,
     },
     {
@@ -78,25 +57,51 @@ const TravelShow: React.FC = () => {
       sortable: true,
     },
     {
-      name: "Custo",
-      selector: (row) => row.cost,
+      name: "Tag",
+      cell: (row) => (
+        <Tag title={row.tag} type="danger" />
+      ),
     },
     {
       button: true,
       cell: (row) => (
-        <input onClick={() => handleTotal(row)} name="id" type="radio"></input>
+        <input className="form-check-input" onClick={() => handleTotal(row)} name="id" type="radio"></input>
       ),
     },
   ];
 
+  const options = [
+    {
+      name: "Rota 1",
+      distance: "12 km",
+      originDatetime: "20/12/2022",
+      destinationDatetime: "20/12/2022",
+      tag: "Melhor distância",
+    },
+    {
+      name: "Rota 1",
+      distance: "12 km",
+      originDatetime: "20/12/2022",
+      destinationDatetime: "20/12/2022",
+      tag: "Mais econômica",
+    },
+    {
+      name: "Rota 1",
+      distance: "12 km",
+      originDatetime: "20/12/2022",
+      destinationDatetime: "20/12/2022",
+    },
+  ]
+
   return (
-    <Wrapper title="Viagem 20/10/2022 US$">
-      <Card title="Rota 1">
-        <Tables data={data} columns={columnsTravelsTable} />
-      </Card>
-      <Card title="Rota 2">
-        <Tables data={data} columns={columnsTravelsTable} />
-      </Card>
+    <Wrapper title={String(travel?.createdAt)}>
+      {travel?.routes?.map((item) => {
+        return (
+          <Card title={item.name} button={{title: "Teste", action: "/"}}>
+            <Tables data={options} columns={columnsTravelsTable} />
+          </Card>
+        );
+      })}
     </Wrapper>
   );
 };
